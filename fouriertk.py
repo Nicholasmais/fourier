@@ -36,9 +36,10 @@ def conta():
     fun = func.get()
     fun1 = fun.replace("N", "(i+1)")
     fun2 = fun1.replace('x', '*x[val]')
+    fun3 = fun2.replace("^","**")
     for val in range(0, len(x)):
         for i in range(ini-1, fim ):
-            y[val] += eval(fun2)
+            y[val] += eval(fun3)
     ax.clear()
     ax.spines['left'].set_position(('data', 0.0))
     ax.spines['bottom'].set_position(('data', 0.0))
