@@ -4,6 +4,8 @@ from matplotlib.figure import Figure
 from math import *
 from numpy import arange
 from numpy import absolute
+from sympy import sympify, latex
+
 janela = tk.Tk()
 
 janela.state("zoomed")
@@ -24,7 +26,6 @@ canvas.get_tk_widget().pack(side='top', fill='both', expand=1)
 canvas._tkcanvas.pack(side='top', fill='both', expand=1)
 
 ax = fi.add_subplot(1, 1, 1)
-
 
 
 def conta():
@@ -52,6 +53,19 @@ def conta():
     ax.set_ylim([-absolute(negy),posy])
     linha, = ax.plot(x, y)
     fi.canvas.draw_idle()
+    display()
+
+
+def display():
+    ini = int(text.get())
+    fim = int(text2.get())
+    tmptext = func.get()
+    tmptext = latex(sympify(tmptext))
+    tmptext = "$"+ " \sum_{{n={}}}^{{{}}}".format(ini,fim) + tmptext+"$"
+
+    ex.clear()
+    ex.text(0.3, 0.4, tmptext, fontsize = 20)
+    fi2.canvas.draw_idle()
 
 
 frame_esquerda = tk.Frame(janela)
@@ -62,16 +76,16 @@ somato = tk.LabelFrame(frame_esquerda, relief='ridge', bd=5, width=30, height=5,
 frame_esquerda.update()
 somato.place(x=frame_esquerda.winfo_width() * 0.22, y=20)
 
-text = tk.Entry(somato)
+text = tk.Entry(somato, width=12)
 text.grid(row=1, column=1)
 text.insert(0, '1')
-btn = tk.Button(somato, width=8, text='Valor Inicial')
+btn = tk.Button(somato, width=15, text='Valor Inicial')
 btn.grid(row=1, column=2)
 
-text2 = tk.Entry(somato)
+text2 = tk.Entry(somato,width=12)
 text2.grid(row=3, column=1)
 text2.insert(0, '10')
-btn2 = tk.Button(somato, width=8, text='Valor Final')
+btn2 = tk.Button(somato, width=15, text='Valor Final')
 btn2.grid(row=3, column=2)
 
 limites = tk.LabelFrame(frame_esquerda, relief='ridge', bd=5, width=30, height=5, text="Limite valores x")
@@ -113,14 +127,29 @@ btn4.config(command=conta)
 btn5.config(command=conta)
 btn6.config(command=conta)
 
+
 funclab = tk.LabelFrame(frame_esquerda, relief='ridge', bd=5, height=5, text="Função")
 funclab.place(x=frame_esquerda.winfo_width() * 0.375, y=20)
 
-func = tk.Entry(funclab, width=90)
+texto = tk.StringVar()
+func = tk.Entry(funclab, width=90, textvariable=texto)
 func.pack()
-
 grap = tk.Button(funclab, width=10,text="Plotar", command=conta)
 grap.pack()
+
+
+exfram = tk.LabelFrame(frame_esquerda, relief='ridge',bd=5,height=155,width=555,text="Exemplo")
+exfram.place(x=frame_esquerda.winfo_width() * 0.375, y=99)
+
+fi2 = Figure(figsize=(5.45, 1.3), dpi=100, edgecolor='black')
+
+canvas2 = FigureCanvasTkAgg(fi2, master=exfram)
+canvas2._tkcanvas.pack()
+
+ex = fi2.add_subplot(111)
+ex.get_xaxis().set_visible(False)
+ex.get_yaxis().set_visible(False)
+
 
 ntb = NavigationToolbar2Tk(canvas, frame_esquerda)
 ntb.pack()
