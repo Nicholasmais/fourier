@@ -138,7 +138,7 @@ grap = tk.Button(funclab, width=10,text="Plotar", command=conta)
 grap.pack()
 
 
-exfram = tk.LabelFrame(frame_esquerda, relief='ridge',bd=5,height=155,width=555,text="Exemplo")
+exfram = tk.LabelFrame(frame_esquerda, relief='ridge',bd=5,height=155,width=555,text="Display")
 exfram.place(x=frame_esquerda.winfo_width() * 0.375, y=99)
 
 fi2 = Figure(figsize=(5.45, 1.3), dpi=100, edgecolor='black')
