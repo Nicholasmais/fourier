@@ -8,7 +8,7 @@ from sympy import sympify, latex
 
 janela = tk.Tk()
 
-janela.state("zoomed")
+janela.attributes('-zoomed', True)  # This will maximize the window
 janela.title("Fourier")
 janela.update()
 
